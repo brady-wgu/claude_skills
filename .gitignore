@@ -1,0 +1,8 @@
+.env
+*.csv
+!requirements.txt
+__pycache__/
+*.pyc
+.venv/
+notes/
+output/
