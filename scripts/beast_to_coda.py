@@ -136,10 +136,20 @@ def main():
     dry_run = "--dry-run" in sys.argv
     verbose = "--verbose" in sys.argv
 
-    # Read CSV from stdin
-    raw = sys.stdin.read().strip()
+    # Read CSV from --input file or stdin
+    input_file = None
+    for i, arg in enumerate(sys.argv):
+        if arg == "--input" and i + 1 < len(sys.argv):
+            input_file = sys.argv[i + 1]
+
+    if input_file:
+        with open(input_file, "r", encoding="utf-8") as f:
+            raw = f.read().strip()
+    else:
+        raw = sys.stdin.read().strip()
+
     if not raw:
-        print("ERROR: No input received on stdin. Pipe a BEAST import CSV.")
+        print("ERROR: No input received. Use --input <file> or pipe CSV via stdin.")
         sys.exit(1)
 
     reader = csv.DictReader(io.StringIO(raw))

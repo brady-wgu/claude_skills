@@ -47,7 +47,8 @@ Construct a JSON object from the BLOG output with these keys:
 
 NEVER include Section 7 (Sensitive Items) in this JSON.
 
-Pipe the JSON to: `python scripts/blog_to_coda.py --verbose`
+Write the JSON to a temp file using the Write tool, then run:
+`python scripts/blog_to_coda.py --input <temp_file_path>`
 
 The script strips markdown formatting to plain text for Coda (the API does not render markdown). Headings become UPPERCASE, bold markers are removed, dashes are preserved.
 
@@ -67,7 +68,8 @@ Produce all four sections: Morning Briefing, Flags and Issues, Recommended Task 
 ### Step 5: Write BEAST Updates to Coda
 Extract the import CSV block from the BEAST output (the block labeled "IMPORT CSV -- CHANGED AND NEW ROWS ONLY"). This is a 10-column CSV with header row.
 
-Pipe the CSV to: `python scripts/beast_to_coda.py --verbose`
+Write the import CSV to a temp file using the Write tool, then run:
+`python scripts/beast_to_coda.py --input <temp_file_path>`
 
 The script validates field values, converts dates to ISO, skips child rows, and upserts using Task ID as the key column.
 
