@@ -4,10 +4,11 @@ Automated daily BLOG and BEAST pipeline. Paste raw OneNote notes into Claude Cod
 
 ## Mode
 
-MODE: TEST
+MODE: PRODUCTION
 
-In TEST mode, pause after every step for Brady's review before continuing.
-In PRODUCTION mode, run the full pipeline without pausing.
+Run the full pipeline from start to finish without pausing for confirmation.
+Do not stop between steps. Do not ask "continue?" or wait for input.
+Execute all six steps in sequence and deliver the final report at the end.
 
 ---
 
@@ -20,7 +21,6 @@ Process the pasted notes through the BLOG Processing Specification below. Output
 
 The date for the entry comes from the notes themselves (the day being documented), not from the system date. The user typically runs this the morning after the work day.
 
-TEST: Stop and display all sections. Wait for "continue" before proceeding.
 
 ### Step 2: Write BLOG Entry to Coda
 Construct a JSON object from the BLOG output with these keys:
@@ -40,21 +40,18 @@ Pipe the JSON to: `python scripts/blog_to_coda.py --verbose`
 
 The script strips markdown formatting to plain text for Coda (the API does not render markdown). Headings become UPPERCASE, bold markers are removed, dashes are preserved.
 
-TEST: Stop and show the script output. Wait for "continue" before proceeding.
 
 ### Step 3: Extract BEAST Table from Coda
 Run: `python scripts/beast_from_coda.py`
 
 Capture the 12-column CSV output (stdout). This is the full To Do List with all rows including child rows. Due dates are converted from ISO to D Mon YYYY format for BEAST processing.
 
-TEST: Stop and confirm row count. Wait for "continue" before proceeding.
 
 ### Step 4: BEAST Processing
 Process the extracted CSV plus the BLOG output from Step 1 through the BEAST Processing Specification below. Today's date for BEAST processing is the system date (the morning the pipeline runs).
 
 Produce all four sections: Morning Briefing, Flags and Issues, Recommended Task Updates (with import CSV), and Today's Priority List.
 
-TEST: Stop and display all four sections. Wait for "continue" before proceeding.
 
 ### Step 5: Write BEAST Updates to Coda
 Extract the import CSV block from the BEAST output (the block labeled "IMPORT CSV -- CHANGED AND NEW ROWS ONLY"). This is a 10-column CSV with header row.
@@ -63,7 +60,6 @@ Pipe the CSV to: `python scripts/beast_to_coda.py --verbose`
 
 The script validates field values, converts dates to ISO, skips child rows, and upserts using Task ID as the key column.
 
-TEST: Stop and show the script output. Wait for "continue" before proceeding.
 
 ### Step 6: Final Report
 Output a summary including:
