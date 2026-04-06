@@ -6,9 +6,20 @@ Automated daily BLOG and BEAST pipeline. Paste raw OneNote notes into Claude Cod
 
 MODE: PRODUCTION
 
-Run the full pipeline from start to finish without pausing for confirmation.
-Do not stop between steps. Do not ask "continue?" or wait for input.
-Execute all six steps in sequence and deliver the final report at the end.
+CRITICAL EXECUTION RULES:
+- Run the ENTIRE pipeline as one uninterrupted sequence.
+- Do NOT output any text to the user until the Final Report in Step 6.
+- Do NOT pause, ask for confirmation, or wait for input between steps.
+- Process BLOG and BEAST internally. Run all scripts via Bash calls.
+- The user should see ONLY the Final Report as output. Nothing else.
+- If a script fails with a retryable error (e.g., 504 timeout), retry once silently.
+
+Execution flow:
+1. Process BLOG internally (no output)
+2. Run blog_to_coda.py AND beast_from_coda.py via Bash (parallel if possible)
+3. Process BEAST internally using the CSV output (no output)
+4. Run beast_to_coda.py via Bash
+5. Output the Final Report (this is the ONLY user-visible output)
 
 ---
 
