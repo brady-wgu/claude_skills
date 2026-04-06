@@ -24,7 +24,10 @@ class CodaClient:
     BASE_URL = "https://coda.io/apis/v1"
 
     def __init__(self, verbose=False):
-        load_dotenv()
+        # Load .env from the project root (one level up from scripts/)
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        env_path = os.path.join(project_root, ".env")
+        load_dotenv(env_path)
         self.api_key = os.getenv("CODA_API_KEY", "").strip()
         self.doc_id = os.getenv("CODA_DOC_ID", "").strip()
         self.verbose = verbose

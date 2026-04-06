@@ -15,9 +15,12 @@ Usage:
 
 import csv
 import io
+import os
 import re
 import sys
 from datetime import datetime
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from coda_client import CodaClient
 
