@@ -2,12 +2,15 @@
 name: glossary-lookup
 model: sonnet
 description: >
-  Search, add, edit, delete, and query WGU glossary terms stored in Coda. Use this skill when
-  the user asks about WGU terminology, acronyms, definitions, or the glossary. Trigger phrases
-  include: "what does X mean", "what does X stand for", "define X", "glossary", "look up",
-  "MMORPG", "my glossary", "brady's glossary", "add to glossary", "update glossary", "delete from glossary", "search glossary",
-  "list all terms", "what is the difference between X and Y", or any question about WGU
-  institutional vocabulary, roles, systems, or acronyms.
+  Search, add, edit, delete, and query WGU glossary terms stored in Coda. ALWAYS use this skill
+  when the user mentions any of these trigger words or phrases: "glossary", "my glossary",
+  "brady's glossary", "MMORPG", "look up", "define", "search glossary", "add to glossary",
+  "update glossary", "delete from glossary", "list all terms", "what is the difference between
+  X and Y". Also use this skill when the user asks "what does X mean", "what does X stand for",
+  or any question about WGU institutional vocabulary, acronyms, roles, or systems, but ONLY
+  when paired with a trigger word like "glossary" (e.g., "glossary: what does SDP mean?" or
+  "check my glossary for SDP"). Without a trigger word, the user may be asking a general
+  knowledge question that does not require the glossary tool.
 ---
 
 # MMORPG Glossary Tool

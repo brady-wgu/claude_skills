@@ -74,15 +74,53 @@ The SKILL.md file references scripts at a specific path. Update the path in the 
 
 ## How to Use
 
-Open Claude Code and just ask about glossary terms naturally:
+Open Claude Code and ask about glossary terms. Include a **trigger word** so Claude knows to use the glossary tool instead of answering from general knowledge.
 
-- **"What does SDP stand for?"** -- looks up the term and tells you
-- **"Search the glossary for assessment"** -- finds all related entries
-- **"Add MMORPG to the glossary: Massively Multi-employee Online Reference for Programs Glossary"** -- creates a new entry
-- **"Update the definition of CQI"** -- edits an existing entry
-- **"Delete the test entry"** -- removes an entry (asks for confirmation first)
-- **"What's the difference between EPD and PDO?"** -- compares two terms using their definitions
-- **"Show me all terms"** -- lists everything
+### Trigger Words
+
+Any of these words or phrases will activate the glossary skill:
+
+| Trigger | Example |
+|---------|---------|
+| **glossary** | "Search the glossary for assessment" |
+| **my glossary** | "Check my glossary for SDP" |
+| **brady's glossary** | "Look up UPL in brady's glossary" |
+| **MMORPG** | "MMORPG: what does CQI stand for?" |
+| **look up** | "Look up the definition of EPD" |
+| **define** | "Define SDP from the glossary" |
+
+### Example Requests
+
+**Searching and looking up terms:**
+- "Glossary: what does SDP stand for?"
+- "Search my glossary for assessment"
+- "Look up UPL in the glossary"
+
+**Adding new terms:**
+- "Add MMORPG to the glossary: Massively Multi-employee Online Reference for Programs Glossary"
+- "Glossary: add a new term for XYZ"
+
+**Editing existing terms:**
+- "Update the definition of CQI in the glossary"
+- "Glossary: change the full name of SDP"
+
+**Deleting terms:**
+- "Delete the test entry from the glossary"
+
+**Comparing terms:**
+- "Glossary: what's the difference between EPD and PDO?"
+
+**Listing everything:**
+- "List all terms in my glossary"
+
+### Why Trigger Words Matter
+
+Without a trigger word, Claude may answer from general knowledge instead of consulting the Coda glossary. For example:
+
+- "What does SDP mean?" -- Claude may answer from general knowledge (not reliable)
+- "Glossary: what does SDP mean?" -- Claude uses the glossary tool (reliable)
+
+The simplest habit: start your request with "glossary:" or include "my glossary" somewhere in the sentence.
 
 Claude handles the Coda API calls behind the scenes. You never need to run Python commands yourself.
 
@@ -97,7 +135,7 @@ The skill runs on **Sonnet 4.6 or above**. If you are using a lighter model, Cla
 | "CODA_API_KEY not set" | Check that `.env` exists and has your key |
 | "Could not find table named 'Glossary'" | Run `python scripts/cli.py discover` to see available tables |
 | Auth errors (401/403) | Regenerate your Coda API key at https://coda.io/account |
-| Skill not triggering | Restart Claude Code; check that the plugin folder is at `~/.claude/plugins/mmorpg-glossary/` |
+| Skill not triggering | Include a trigger word like "glossary" or "my glossary" in your request. Also check that the plugin folder exists at `~/.claude/plugins/mmorpg-glossary/` and restart Claude Code |
 | Stale data after add/edit | Coda has a few seconds of propagation delay; retry the search |
 
 ## Glossary Schema
