@@ -41,7 +41,7 @@ This repo is organized into two categories based on where the skill runs:
 | Skill | Description | Status |
 |-------|-------------|--------|
 | [**blog-beast-pipeline**](claude-code-skills/blog-beast-pipeline/) | Automated daily workflow: processes raw work notes into a 7-section journal (BLOG), writes to Coda, pulls the task list from Coda, produces a 4-section morning briefing (BEAST) with task updates, and syncs everything back to Coda. Includes Python scripts for bidirectional Coda API integration. | Production |
-| [**mmorpg-glossary**](claude-code-skills/mmorpg-glossary/) | Conversational glossary tool. Search, add, edit, and delete WGU-specific terms, acronyms, and definitions stored in a Coda table. Ask questions naturally in Claude Code (e.g., "What does SDP stand for?") and get grounded answers from the glossary. Includes Python scripts for Coda CRUD and a Claude Code plugin for the conversational interface. | Production |
+| [**mmorpg-glossary**](claude-code-skills/mmorpg-glossary/) | WGU glossary CRUD tool. Python scripts provide reliable search, add, edit, and delete operations against the Glossary table in Coda. Includes an experimental Claude Code plugin for conversational access (plugin triggering is unreliable; scripts work directly). Web interface planned. | Beta |
 
 ### Claude Chat Skills
 
