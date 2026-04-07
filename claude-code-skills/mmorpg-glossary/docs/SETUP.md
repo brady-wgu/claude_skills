@@ -74,23 +74,9 @@ The SKILL.md file references scripts at a specific path. Update the path in the 
 
 ## How to Use
 
-There are three ways to invoke the glossary tool, listed from most reliable to least:
+Include the word **"glossary"** in your request so Claude knows to use the glossary tool. Without it, Claude may answer from general knowledge or trigger a different skill.
 
-### Method 1: Slash Command (most reliable)
-
-Type `/glossary` followed by your question:
-
-```
-/glossary what does SDP stand for?
-/glossary search for assessment
-/glossary add XYZ meaning "something"
-```
-
-This guarantees the glossary skill fires every time.
-
-### Method 2: Trigger Words (reliable)
-
-Include one of these words or phrases in your request, and Claude will recognize it as a glossary request:
+### Trigger Words
 
 | Trigger Word | Example |
 |-------------|---------|
@@ -98,34 +84,27 @@ Include one of these words or phrases in your request, and Claude will recognize
 | **my glossary** | "Check my glossary for SDP" |
 | **brady's glossary** | "Look up UPL in brady's glossary" |
 | **MMORPG** | "MMORPG: what does CQI stand for?" |
-| **look up** | "Look up the definition of EPD" |
-| **define** | "Define SDP from the glossary" |
-
-### Method 3: Plain Questions (not reliable)
-
-Plain questions like "What does SDP mean?" may not trigger the glossary tool. Claude might answer from general knowledge or invoke a different skill entirely. Always include a trigger word or use the slash command.
 
 ### Example Requests
 
 **Searching and looking up terms:**
-- `/glossary what does SDP stand for?`
+- "Glossary: what does SDP stand for?"
 - "Search my glossary for assessment"
 - "Look up UPL in the glossary"
 
 **Adding new terms:**
-- `/glossary add MMORPG: Massively Multi-employee Online Reference for Programs Glossary`
 - "Add MMORPG to the glossary"
+- "Glossary: add a new term for XYZ"
 
 **Editing existing terms:**
-- `/glossary update CQI definition`
 - "Update the definition of CQI in the glossary"
+- "Glossary: change the full name of SDP"
 
 **Deleting terms:**
-- `/glossary delete test entry`
 - "Delete the test entry from the glossary"
 
 **Comparing terms:**
-- `/glossary what's the difference between EPD and PDO?`
+- "Glossary: what's the difference between EPD and PDO?"
 
 **Listing everything:**
 - `/glossary list all terms`
