@@ -1,0 +1,7 @@
+{
+  "name": "mmorpg-glossary",
+  "description": "MMORPG Glossary Tool. Search, add, edit, and delete WGU glossary terms stored in Coda.",
+  "author": {
+    "name": "Brady Redfearn"
+  }
+}

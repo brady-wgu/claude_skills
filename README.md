@@ -41,6 +41,7 @@ This repo is organized into two categories based on where the skill runs:
 | Skill | Description | Status |
 |-------|-------------|--------|
 | [**blog-beast-pipeline**](claude-code-skills/blog-beast-pipeline/) | Automated daily workflow: processes raw work notes into a 7-section journal (BLOG), writes to Coda, pulls the task list from Coda, produces a 4-section morning briefing (BEAST) with task updates, and syncs everything back to Coda. Includes Python scripts for bidirectional Coda API integration. | Production |
+| [**mmorpg-glossary**](claude-code-skills/mmorpg-glossary/) | Conversational glossary tool. Search, add, edit, and delete WGU-specific terms, acronyms, and definitions stored in a Coda table. Ask questions naturally in Claude Code (e.g., "What does SDP stand for?") and get grounded answers from the glossary. Includes Python scripts for Coda CRUD and a Claude Code plugin for the conversational interface. | Production |
 
 ### Claude Chat Skills
 
@@ -58,23 +59,40 @@ This repo is organized into two categories based on where the skill runs:
 claude_skills/
 │
 ├── claude-code-skills/
-│   └── blog-beast-pipeline/                Full daily automation pipeline
-│       ├── CLAUDE.md                       Pipeline orchestration + specs
+│   ├── blog-beast-pipeline/                Full daily automation pipeline
+│   │   ├── CLAUDE.md                       Pipeline orchestration + specs
+│   │   ├── config.example.env              Template for Coda API key
+│   │   ├── requirements.txt                Python dependencies
+│   │   ├── docs/
+│   │   │   └── SETUP.md                    Detailed setup guide
+│   │   ├── scripts/
+│   │   │   ├── coda_client.py              Coda API wrapper
+│   │   │   ├── blog_to_coda.py             Write BLOG entry to Coda
+│   │   │   ├── beast_from_coda.py          Pull BEAST table from Coda
+│   │   │   └── beast_to_coda.py            Upsert BEAST updates to Coda
+│   │   └── plugin/
+│   │       ├── .claude-plugin/
+│   │       │   └── plugin.json             Plugin manifest
+│   │       └── skills/
+│   │           └── run-pipeline/
+│   │               └── SKILL.md            Unified pipeline skill
+│   │
+│   └── mmorpg-glossary/                    WGU glossary CRUD tool
+│       ├── CLAUDE.md                       Project instructions
 │       ├── config.example.env              Template for Coda API key
 │       ├── requirements.txt                Python dependencies
 │       ├── docs/
-│       │   └── SETUP.md                    Detailed setup guide
+│       │   └── SETUP.md                    Setup guide for colleagues
 │       ├── scripts/
 │       │   ├── coda_client.py              Coda API wrapper
-│       │   ├── blog_to_coda.py             Write BLOG entry to Coda
-│       │   ├── beast_from_coda.py          Pull BEAST table from Coda
-│       │   └── beast_to_coda.py            Upsert BEAST updates to Coda
+│       │   ├── glossary_service.py         Glossary business logic
+│       │   └── cli.py                      CLI bridge (called by skill)
 │       └── plugin/
 │           ├── .claude-plugin/
 │           │   └── plugin.json             Plugin manifest
 │           └── skills/
-│               └── run-pipeline/
-│                   └── SKILL.md            Unified pipeline skill
+│               └── glossary-lookup/
+│                   └── SKILL.md            Conversational glossary skill
 │
 └── claude-chat-skills/
     ├── beast-morning-briefing/             Standalone BEAST analysis
