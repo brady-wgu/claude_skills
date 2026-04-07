@@ -1,5 +1,6 @@
 ---
 name: glossary-lookup
+command: glossary
 model: sonnet
 description: >
   Search, add, edit, delete, and query WGU glossary terms stored in Coda. ALWAYS use this skill

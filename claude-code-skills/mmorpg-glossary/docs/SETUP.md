@@ -74,14 +74,26 @@ The SKILL.md file references scripts at a specific path. Update the path in the 
 
 ## How to Use
 
-Open Claude Code and ask about glossary terms. Include a **trigger word** so Claude knows to use the glossary tool instead of answering from general knowledge.
+There are three ways to invoke the glossary tool, listed from most reliable to least:
 
-### Trigger Words
+### Method 1: Slash Command (most reliable)
 
-Any of these words or phrases will activate the glossary skill:
+Type `/glossary` followed by your question:
 
-| Trigger | Example |
-|---------|---------|
+```
+/glossary what does SDP stand for?
+/glossary search for assessment
+/glossary add XYZ meaning "something"
+```
+
+This guarantees the glossary skill fires every time.
+
+### Method 2: Trigger Words (reliable)
+
+Include one of these words or phrases in your request, and Claude will recognize it as a glossary request:
+
+| Trigger Word | Example |
+|-------------|---------|
 | **glossary** | "Search the glossary for assessment" |
 | **my glossary** | "Check my glossary for SDP" |
 | **brady's glossary** | "Look up UPL in brady's glossary" |
@@ -89,38 +101,34 @@ Any of these words or phrases will activate the glossary skill:
 | **look up** | "Look up the definition of EPD" |
 | **define** | "Define SDP from the glossary" |
 
+### Method 3: Plain Questions (not reliable)
+
+Plain questions like "What does SDP mean?" may not trigger the glossary tool. Claude might answer from general knowledge or invoke a different skill entirely. Always include a trigger word or use the slash command.
+
 ### Example Requests
 
 **Searching and looking up terms:**
-- "Glossary: what does SDP stand for?"
+- `/glossary what does SDP stand for?`
 - "Search my glossary for assessment"
 - "Look up UPL in the glossary"
 
 **Adding new terms:**
-- "Add MMORPG to the glossary: Massively Multi-employee Online Reference for Programs Glossary"
-- "Glossary: add a new term for XYZ"
+- `/glossary add MMORPG: Massively Multi-employee Online Reference for Programs Glossary`
+- "Add MMORPG to the glossary"
 
 **Editing existing terms:**
+- `/glossary update CQI definition`
 - "Update the definition of CQI in the glossary"
-- "Glossary: change the full name of SDP"
 
 **Deleting terms:**
+- `/glossary delete test entry`
 - "Delete the test entry from the glossary"
 
 **Comparing terms:**
-- "Glossary: what's the difference between EPD and PDO?"
+- `/glossary what's the difference between EPD and PDO?`
 
 **Listing everything:**
-- "List all terms in my glossary"
-
-### Why Trigger Words Matter
-
-Without a trigger word, Claude may answer from general knowledge instead of consulting the Coda glossary. For example:
-
-- "What does SDP mean?" -- Claude may answer from general knowledge (not reliable)
-- "Glossary: what does SDP mean?" -- Claude uses the glossary tool (reliable)
-
-The simplest habit: start your request with "glossary:" or include "my glossary" somewhere in the sentence.
+- `/glossary list all terms`
 
 Claude handles the Coda API calls behind the scenes. You never need to run Python commands yourself.
 
