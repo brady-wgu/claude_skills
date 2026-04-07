@@ -91,8 +91,8 @@ claude_skills/
 │           ├── .claude-plugin/
 │           │   └── plugin.json             Plugin manifest
 │           └── skills/
-│               └── glossary-lookup/
-│                   └── SKILL.md            Conversational glossary skill
+│               └── glossary/
+│                   └── SKILL.md            Conversational glossary skill (/glossary)
 │
 └── claude-chat-skills/
     ├── beast-morning-briefing/             Standalone BEAST analysis

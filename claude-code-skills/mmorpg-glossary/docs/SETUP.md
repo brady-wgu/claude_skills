@@ -67,7 +67,7 @@ Restart Claude Code (or start a new session) for the plugin to load.
 
 The SKILL.md file references scripts at a specific path. Update the path in the SKILL.md to match where you cloned the repo:
 
-1. Open `~/.claude/plugins/mmorpg-glossary/skills/glossary-lookup/SKILL.md`
+1. Open `~/.claude/plugins/mmorpg-glossary/skills/glossary/SKILL.md`
 2. Find the line: `All scripts run from: C:\Users\brady.redfearn\Projects\mmorpg-glossary`
 3. Replace it with your actual path, e.g.: `All scripts run from: /home/yourname/claude_skills/claude-code-skills/mmorpg-glossary`
 4. Update the `cd` path in all command examples to match

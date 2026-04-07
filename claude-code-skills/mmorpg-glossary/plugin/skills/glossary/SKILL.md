@@ -1,7 +1,8 @@
 ---
-name: glossary-lookup
-command: glossary
+name: glossary
 model: sonnet
+argument-hint: <your question or request>
+allowed-tools: [Bash, Read, Glob, Grep]
 description: >
   Search, add, edit, delete, and query WGU glossary terms stored in Coda. ALWAYS use this skill
   when the user mentions any of these trigger words or phrases: "glossary", "my glossary",
