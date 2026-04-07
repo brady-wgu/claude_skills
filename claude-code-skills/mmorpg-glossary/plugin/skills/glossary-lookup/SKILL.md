@@ -5,7 +5,7 @@ description: >
   Search, add, edit, delete, and query WGU glossary terms stored in Coda. Use this skill when
   the user asks about WGU terminology, acronyms, definitions, or the glossary. Trigger phrases
   include: "what does X mean", "what does X stand for", "define X", "glossary", "look up",
-  "MMORPG", "add to glossary", "update glossary", "delete from glossary", "search glossary",
+  "MMORPG", "my glossary", "add to glossary", "update glossary", "delete from glossary", "search glossary",
   "list all terms", "what is the difference between X and Y", or any question about WGU
   institutional vocabulary, roles, systems, or acronyms.
 ---
