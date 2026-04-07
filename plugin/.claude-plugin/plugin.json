@@ -1,0 +1,7 @@
+{
+  "name": "brady-pipeline",
+  "description": "Brady's unified BLOG and BEAST daily pipeline. Processes raw work notes, writes to Coda, and produces a morning briefing.",
+  "author": {
+    "name": "Brady Redfearn"
+  }
+}
