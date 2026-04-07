@@ -55,7 +55,7 @@ NEVER include Section 7 (Sensitive Items) in this JSON.
 
 Write the JSON to a temp file, then run:
 ```
-cd C:\Users\brady.redfearn\Projects\blog-beast-automation && python scripts/blog_to_coda.py --input <temp_file_path>
+cd C:\Users\brady.redfearn\Projects\blog-beast-automation\claude-code-skills\blog-beast-pipeline && python scripts/blog_to_coda.py --input <temp_file_path>
 ```
 
 The script strips markdown formatting to plain text for Coda (the API does not render markdown). Headings become UPPERCASE, bold markers are removed, dashes are preserved.
@@ -64,7 +64,7 @@ The script strips markdown formatting to plain text for Coda (the API does not r
 
 Run:
 ```
-cd C:\Users\brady.redfearn\Projects\blog-beast-automation && python scripts/beast_from_coda.py
+cd C:\Users\brady.redfearn\Projects\blog-beast-automation\claude-code-skills\blog-beast-pipeline && python scripts/beast_from_coda.py
 ```
 
 Capture the 12-column CSV output (stdout). This is the full To Do List with all rows including child rows. Due dates are converted from ISO to D Mon YYYY format for BEAST processing.
@@ -83,7 +83,7 @@ Extract the import CSV block from the BEAST output (the block labeled "IMPORT CS
 
 Write the import CSV to a temp file, then run:
 ```
-cd C:\Users\brady.redfearn\Projects\blog-beast-automation && python scripts/beast_to_coda.py --input <temp_file_path>
+cd C:\Users\brady.redfearn\Projects\blog-beast-automation\claude-code-skills\blog-beast-pipeline && python scripts/beast_to_coda.py --input <temp_file_path>
 ```
 
 The script validates field values, converts dates to ISO, skips child rows, and upserts using Task ID as the key column.
