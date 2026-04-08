@@ -35,7 +35,7 @@ cd claude_skills/claude-code-skills/blog-beast-pipeline
 pip install -r requirements.txt
 ```
 
-This installs `requests` and `python-dotenv`. No other dependencies are required.
+This installs `requests`, `python-dotenv`, and `truststore`. The `truststore` package allows Python to use the Windows system certificate store, which is required in corporate environments where a security proxy (e.g., zScaler) intercepts HTTPS traffic with its own root CA.
 
 ---
 
@@ -180,6 +180,12 @@ The `.env` file must be in the `blog-beast-pipeline/` directory (one level above
 
 **Formatting not rendering in Coda:**
 Coda's API does not render markdown or HTML in table cells. All text is written as plain text. This is a known Coda platform limitation. The scripts automatically strip markdown formatting before writing.
+
+**SSL: CERTIFICATE_VERIFY_FAILED:**
+This means Python cannot verify the Coda API's SSL certificate. Common in corporate environments where a security proxy (zScaler, Netskope, etc.) intercepts HTTPS with its own root CA. Fix: install `truststore` (`pip install truststore`). The scripts inject it automatically on import to use the OS certificate store instead of Python's bundled certifi CA bundle. If `truststore` is already installed and the error persists, check that your IT department has added the proxy's root CA to the Windows certificate store.
+
+**Retryable errors (429, 502, 503, 504, timeouts):**
+The scripts retry transient errors once automatically with a 3-second delay. If the error persists after the retry, the script exits with an error. Check your network connection and try again. For 429 (rate limit) errors, wait a minute before retrying.
 
 **"run pipeline" doesn't trigger:**
 Make sure the plugin is installed at `~/.claude/plugins/brady-pipeline/` and Claude Code has been restarted. As a fallback, open Claude Code directly in the `blog-beast-pipeline/` directory -- the `CLAUDE.md` there defines the same pipeline.
