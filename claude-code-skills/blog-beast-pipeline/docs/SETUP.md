@@ -68,18 +68,27 @@ The pipeline is scoped to a specific Coda document. Out of the box, it points to
 
 3. Update two files:
    - `.env`: set `CODA_DOC_ID` to your doc ID
-   - `scripts/coda_client.py`: update `ALLOWED_DOC_ID` to match (this is a safety check that prevents writes to the wrong document)
-
-4. Run the discovery command to get your table and column IDs:
-   ```bash
-   python scripts/coda_client.py --discover --verbose
-   ```
-
-5. Update the column ID mappings in `scripts/blog_to_coda.py`, `scripts/beast_from_coda.py`, and `scripts/beast_to_coda.py` to match your table schema
+   - `scripts/coda_client.py`: update `ALLOWED_DOC_ID` on line 35 to match your doc ID (this is a safety check that prevents writes to the wrong document)
 
 ---
 
-## Step 5: Install the Claude Code Plugin
+## Step 5: Auto-Discover Your Coda Schema
+
+Run the discovery script to find your table and column IDs automatically:
+
+```bash
+python scripts/discover_config.py
+```
+
+This connects to your Coda doc, finds tables named "Complete To Do List" and "Daily Log", maps all columns by name, and writes a `config.json` that all pipeline scripts load automatically.
+
+If your tables have different names, update `BEAST_TABLE_NAME` and `LOG_TABLE_NAME` at the top of `scripts/discover_config.py`.
+
+**Note:** If `config.json` does not exist, the scripts fall back to hardcoded defaults (Brady's workspace). This keeps the pipeline backwards-compatible for the original author.
+
+---
+
+## Step 6: Install the Claude Code Plugin
 
 The plugin tells Claude Code how to run the pipeline when you say "run pipeline."
 
@@ -92,13 +101,13 @@ The plugin tells Claude Code how to run the pipeline when you say "run pipeline.
    xcopy plugin\ %USERPROFILE%\.claude\plugins\brady-pipeline\ /E /I
    ```
 
-2. Edit the script paths in `~/.claude/plugins/brady-pipeline/skills/run-pipeline/SKILL.md` to point to wherever you cloned the repo. Look for lines starting with `cd` and update the directory path.
+2. Set `PIPELINE_DIR` in your `.env` file to the absolute path of the `blog-beast-pipeline/` directory. The skill plugin uses this variable in its `cd "$PIPELINE_DIR"` commands.
 
 3. Restart Claude Code. The plugin will be loaded automatically.
 
 ---
 
-## Step 6: Verify Everything Works
+## Step 7: Verify Everything Works
 
 Run these checks from the `blog-beast-pipeline/` directory:
 
@@ -164,7 +173,7 @@ Should validate the CSV without writing to Coda.
 
 ## Pipeline Modes
 
-Edit the MODE line in `CLAUDE.md`:
+Edit the MODE line in `plugin/skills/run-pipeline/SKILL.md`:
 
 ```
 MODE: TEST        # Pause after every step for review
@@ -179,6 +188,8 @@ All scripts are in the `scripts/` directory and support `--verbose` for detailed
 
 | Script | Purpose | Key Flags |
 |--------|---------|-----------|
+| `discover_config.py` | Auto-discover Coda table/column IDs, write `config.json` | `--verbose` |
+| `pipeline_config.py` | Shared config loader (imported by other scripts) | -- |
 | `coda_client.py` | Coda API wrapper (scoped to one doc) | `--discover`, `--verbose` |
 | `blog_to_coda.py` | Write BLOG entry to Daily Log table | `--input <file>`, `--dry-run`, `--verbose` |
 | `beast_from_coda.py` | Pull BEAST table as 12-column CSV (stdout) | `--verbose` |

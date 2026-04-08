@@ -21,21 +21,30 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from coda_client import CodaClient
+from pipeline_config import load_config
 
-# Daily Log table
-LOG_TABLE_ID = "grid-ty2WGfh4qa"
+# Load table/column IDs from config.json (or hardcoded defaults)
+_config = load_config()
+LOG_TABLE_ID = _config["log_table_id"]
+_log_cols = _config["log_columns"]
 
 # Column mapping: JSON key -> Coda column ID
+# Maps the snake_case JSON keys from BLOG output to Coda column IDs
+_JSON_KEY_TO_COLUMN_NAME = {
+    "date":             "Date",
+    "reviewed_notes":   "Reviewed Notes",
+    "polished_summary": "Polished Summary",
+    "executive_bullets": "Executive Bullets",
+    "key_wins":         "Key Wins",
+    "blockers":         "Blockers",
+    "category":         "Category",
+    "status":           "Status",
+    "entry_type":       "Entry Type",
+}
 LOG_COLUMNS = {
-    "date":             "c-oiaBDBstH1",
-    "reviewed_notes":   "c-DXM4h2B28G",
-    "polished_summary": "c-FIWz6AEhwd",
-    "executive_bullets": "c-WSCAvrHbnz",
-    "key_wins":         "c-QuKWx0lwGp",
-    "blockers":         "c-bT-C79ocGH",
-    "category":         "c-CA6Nwa3A2N",
-    "status":           "c-pR0VmtQ5AV",
-    "entry_type":       "c-7IZ-UJNjXG",
+    json_key: _log_cols[col_name]
+    for json_key, col_name in _JSON_KEY_TO_COLUMN_NAME.items()
+    if col_name in _log_cols
 }
 
 # Fields that contain prose and need markdown stripped for Coda plain text

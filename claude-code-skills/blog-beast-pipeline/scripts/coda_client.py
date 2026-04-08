@@ -99,7 +99,8 @@ class CodaClient:
         url = f"{self.BASE_URL}{path}"
         if self.verbose:
             print(f"POST {url}")
-            print(f"  body: {json.dumps(body, indent=2)}")
+            body_preview = json.dumps(body)[:200]
+            print(f"  body (preview): {body_preview}...")
         for attempt in range(2):
             try:
                 resp = requests.post(
@@ -114,7 +115,7 @@ class CodaClient:
                 data = resp.json()
                 if self.verbose:
                     print(f"  status: {resp.status_code}")
-                    print(f"  response: {json.dumps(data, indent=2)}")
+                    print(f"  requestId: {data.get('requestId', 'N/A')}")
                 return data
             except (SSLError, ConnectionError, Timeout) as e:
                 if attempt == 0:

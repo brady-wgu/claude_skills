@@ -63,8 +63,10 @@ NEVER include Section 7 (Sensitive Items) in this JSON.
 
 Write the JSON to `temp_blog_entry.json` in the pipeline directory, then run as a separate Bash call:
 ```
-cd "C:/Users/brady.redfearn/Projects/GitHub/claude_skills/claude-code-skills/blog-beast-pipeline" && python scripts/blog_to_coda.py --input temp_blog_entry.json
+cd "$PIPELINE_DIR" && python scripts/blog_to_coda.py --input temp_blog_entry.json
 ```
+
+> **Setup:** `PIPELINE_DIR` must be set in your `.env` file to the absolute path of this pipeline directory.
 
 The script strips markdown formatting to plain text for Coda (the API does not render markdown). Headings become UPPERCASE, bold markers are removed, dashes are preserved.
 
@@ -72,7 +74,7 @@ The script strips markdown formatting to plain text for Coda (the API does not r
 
 Run as a separate Bash call:
 ```
-cd "C:/Users/brady.redfearn/Projects/GitHub/claude_skills/claude-code-skills/blog-beast-pipeline" && python scripts/beast_from_coda.py
+cd "$PIPELINE_DIR" && python scripts/beast_from_coda.py
 ```
 
 Capture the 12-column CSV output (stdout). This is the full To Do List with all rows including child rows. Due dates are converted from ISO to D Mon YYYY format for BEAST processing.
@@ -91,15 +93,10 @@ Extract the import CSV block from the BEAST output (the block labeled "IMPORT CS
 
 Write the import CSV to `temp_beast_import.csv` in the pipeline directory, then run:
 ```
-cd "C:/Users/brady.redfearn/Projects/GitHub/claude_skills/claude-code-skills/blog-beast-pipeline" && python scripts/beast_to_coda.py --input temp_beast_import.csv
+cd "$PIPELINE_DIR" && python scripts/beast_to_coda.py --input temp_beast_import.csv
 ```
 
 The script validates field values, converts dates to ISO, skips child rows, and upserts using Task ID as the key column.
-
-Also save a copy of the import CSV to:
-```
-C:\Users\brady.redfearn\OneDrive - Western Governors University\Documents\Daily Notes\Daily Task Lists\BEAST_IMPORT_[DDMMMYYYY].csv
-```
 
 ### Step 6: Final Report (ONLY user-visible output)
 
@@ -115,6 +112,10 @@ Output a summary including:
 
 ## AUTHOR CONTEXT
 
+> **FOR NEW USERS:** Replace the author context below with your own name, title, and team.
+> The pipeline uses this context to set the tone and perspective of BLOG entries.
+> Also update the acronym list to match your organization and projects.
+
 Brady Redfearn is a Senior Strategist in Program Development at Western Governors University (WGU). His title, team, and domain context are established. No need to prompt for context each session.
 
 Common acronyms: WGU (Western Governors University), UPL (University Program Leader), PD (Program Development), LR (Learning Resources), SDP (Supplemental Digital Product), JFT (Jellyfish Technologies Ltd.), PES (Program Evaluation & Strategy), BEAST (Brady's Execution, Action, and Strategy Tasks), BLOG (Brady's Learnings, Observations, and Growth)
@@ -122,6 +123,8 @@ Common acronyms: WGU (Western Governors University), UPL (University Program Lea
 ---
 
 ## CODA SCHEMA REFERENCE
+
+> **Note:** Table and column IDs are auto-discovered by `python scripts/discover_config.py` and stored in `config.json`. The reference below shows the default schema. Your IDs may differ.
 
 ### Doc
 - Doc ID: dHXfr0V468

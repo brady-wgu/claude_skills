@@ -23,24 +23,21 @@ from datetime import datetime
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from coda_client import CodaClient
+from pipeline_config import load_config
 
-# BEAST table
-BEAST_TABLE_ID = "grid-M-DmPD4U5x"
-TASK_ID_COL = "c-ImEDreEoEA"
+# Load table/column IDs from config.json (or hardcoded defaults)
+_config = load_config()
+BEAST_TABLE_ID = _config["beast_table_id"]
+_beast_cols = _config["beast_columns"]
+TASK_ID_COL = _beast_cols.get("Task ID", "c-ImEDreEoEA")
 
 # Import column order: column display name -> Coda column ID
-IMPORT_COLUMNS = [
-    ("Task ID",   "c-ImEDreEoEA"),
-    ("Name",      "c-MBRsPfbd6d"),
-    ("Status",    "c-zH_C1i-smP"),
-    ("Priority",  "c-g-kRN3Y2aS"),
-    ("Due Date",  "c-NP39SR6C8D"),
-    ("Type",      "c-Z_PWA6_-Bb"),
-    ("Project",   "c-W3gb8_ca2O"),
-    ("Effort",    "c-RdNqDL9akn"),
-    ("Notes",     "c-ioDsMHggmZ"),
-    ("Link",      "c-wuGVeM0y7z"),
+# 10 columns only (no Parent or Subitems)
+IMPORT_COLUMN_NAMES = [
+    "Task ID", "Name", "Status", "Priority", "Due Date",
+    "Type", "Project", "Effort", "Notes", "Link",
 ]
+IMPORT_COLUMNS = [(name, _beast_cols[name]) for name in IMPORT_COLUMN_NAMES if name in _beast_cols]
 
 # Columns that must NEVER be in the import (Coda manages these)
 FORBIDDEN_COLUMNS = {"Parent", "Subitems", "Calendar Week"}

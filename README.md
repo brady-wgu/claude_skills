@@ -60,12 +60,15 @@ claude_skills/
 │
 ├── claude-code-skills/
 │   ├── blog-beast-pipeline/                Full daily automation pipeline
-│   │   ├── CLAUDE.md                       Pipeline orchestration + specs
-│   │   ├── config.example.env              Template for Coda API key
+│   │   ├── README.md                       Quick start and links
+│   │   ├── CLAUDE.md                       Pointer to SKILL.md (source of truth)
+│   │   ├── config.example.env              Template for .env configuration
 │   │   ├── requirements.txt                Python dependencies
 │   │   ├── docs/
 │   │   │   └── SETUP.md                    Detailed setup guide
 │   │   ├── scripts/
+│   │   │   ├── discover_config.py          Auto-discover Coda table/column IDs
+│   │   │   ├── pipeline_config.py          Shared config loader
 │   │   │   ├── coda_client.py              Coda API wrapper
 │   │   │   ├── blog_to_coda.py             Write BLOG entry to Coda
 │   │   │   ├── beast_from_coda.py          Pull BEAST table from Coda
@@ -75,7 +78,7 @@ claude_skills/
 │   │       │   └── plugin.json             Plugin manifest
 │   │       └── skills/
 │   │           └── run-pipeline/
-│   │               └── SKILL.md            Unified pipeline skill
+│   │               └── SKILL.md            Unified pipeline skill (source of truth)
 │   │
 │   └── mmorpg-glossary/                    WGU glossary CRUD tool
 │       ├── CLAUDE.md                       Project instructions
@@ -146,10 +149,10 @@ These skills were built for a specific workflow at WGU, but the patterns are por
 ### Claude Code Skills
 
 1. **Fork this repo** or copy the skill folder you want
-2. **Update the Coda schema** (or replace Coda with your own tool -- Notion, Airtable, etc.)
-3. **Edit the `CLAUDE.md`** pipeline spec to match your workflow steps
-4. **Update the `SKILL.md`** trigger phrases and processing logic
-5. **Replace the Python scripts** with your own API integrations if needed
+2. **Run `python scripts/discover_config.py`** to auto-configure your Coda table and column IDs (writes `config.json`)
+3. **Update `coda_client.py`** -- set `ALLOWED_DOC_ID` to your Coda doc ID
+4. **Edit the `SKILL.md`** pipeline spec to match your workflow: trigger phrases, processing logic, author context, and acronyms
+5. **Replace the Python scripts** with your own API integrations if targeting a different tool (Notion, Airtable, etc.)
 
 ### General Principles
 

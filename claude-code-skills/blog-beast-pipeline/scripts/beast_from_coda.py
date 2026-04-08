@@ -22,29 +22,23 @@ from datetime import datetime
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from coda_client import CodaClient
+from pipeline_config import load_config
 
-# BEAST table
-BEAST_TABLE_ID = "grid-M-DmPD4U5x"
+# Load table/column IDs from config.json (or hardcoded defaults)
+_config = load_config()
+BEAST_TABLE_ID = _config["beast_table_id"]
+_beast_cols = _config["beast_columns"]
 
 # Export column order: column display name -> Coda column ID
 # All 12 columns including Parent and Subitems for full context
-EXPORT_COLUMNS = [
-    ("Task ID",   "c-ImEDreEoEA"),
-    ("Name",      "c-MBRsPfbd6d"),
-    ("Status",    "c-zH_C1i-smP"),
-    ("Priority",  "c-g-kRN3Y2aS"),
-    ("Due Date",  "c-NP39SR6C8D"),
-    ("Type",      "c-Z_PWA6_-Bb"),
-    ("Project",   "c-W3gb8_ca2O"),
-    ("Effort",    "c-RdNqDL9akn"),
-    ("Notes",     "c-ioDsMHggmZ"),
-    ("Link",      "c-wuGVeM0y7z"),
-    ("Parent",    "c-ONPz07rw_J"),
-    ("Subitems",  "c-RRrt1LG5D9"),
+EXPORT_COLUMN_NAMES = [
+    "Task ID", "Name", "Status", "Priority", "Due Date", "Type",
+    "Project", "Effort", "Notes", "Link", "Parent", "Subitems",
 ]
+EXPORT_COLUMNS = [(name, _beast_cols[name]) for name in EXPORT_COLUMN_NAMES if name in _beast_cols]
 
 
-DUE_DATE_COL = "c-NP39SR6C8D"
+DUE_DATE_COL = _beast_cols.get("Due Date", "c-NP39SR6C8D")
 
 
 def format_date(value):
@@ -108,9 +102,10 @@ def main():
 
     if verbose:
         # Count parent vs child rows
+        task_id_col = _beast_cols.get("Task ID", "c-ImEDreEoEA")
         parent_count = sum(
             1 for r in rows
-            if r.get("values", {}).get("c-ImEDreEoEA")
+            if r.get("values", {}).get(task_id_col)
         )
         child_count = len(rows) - parent_count
         print(f"Parent rows (with Task ID): {parent_count}", file=sys.stderr)
