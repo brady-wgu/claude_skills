@@ -2,6 +2,26 @@
 
 Automated daily BLOG and BEAST pipeline. Paste raw OneNote notes into Claude Code and everything else happens automatically: BLOG processing, Coda write, BEAST pull, BEAST processing, Coda upsert, final report.
 
+## Recommended Model
+
+Run this pipeline with **Sonnet** at **normal effort**. The pipeline follows highly structured, rule-based instructions. Sonnet handles this efficiently. Opus is unnecessary and significantly slower.
+
+## Trigger Phrases
+
+The pipeline activates when the user says any of the following, followed by pasted raw daily work notes:
+
+- `run pipeline`
+- `run BLOG and BEAST`
+- `run blog beast`
+- `process my notes`
+- `morning briefing`
+- `run morning updates`
+- `run BEAST`
+- `run BLOG`
+- `process today's notes`
+
+Typical usage: the user types `run pipeline:` followed by the date header and pasted notes.
+
 ## Mode
 
 MODE: PRODUCTION

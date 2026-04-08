@@ -133,10 +133,29 @@ Should validate the CSV without writing to Coda.
 
 ## Daily Usage
 
+**Recommended model:** Sonnet at normal effort. The pipeline follows highly structured, rule-based instructions. Sonnet handles this efficiently. Opus is unnecessary and significantly slower.
+
+**Trigger phrases** -- any of these followed by pasted raw daily work notes:
+
+| Trigger | When to Use |
+|---------|-------------|
+| `run pipeline` | Standard daily run (most common) |
+| `run BLOG and BEAST` | Same as above, explicit |
+| `run blog beast` | Shorthand |
+| `process my notes` | Natural language alternative |
+| `morning briefing` | When you want to emphasize the BEAST output |
+| `run morning updates` | Same as above |
+| `run BEAST` | Same -- the full pipeline always runs |
+| `run BLOG` | Same -- the full pipeline always runs |
+| `process today's notes` | Natural language alternative |
+
+**Typical usage:**
+
 1. Open Claude Code from any directory
-2. Type **"run pipeline"** and paste your raw daily work notes
-3. Claude processes everything automatically and outputs a final report
-4. Review the report for:
+2. Switch to **Sonnet** model if not already selected
+3. Type `run pipeline:` followed by the date header and pasted raw daily work notes
+4. Claude processes everything automatically and outputs a final report
+5. Review the report for:
    - Sensitive items (displayed in terminal only, never written to Coda)
    - Today's priority list
    - Any new tasks that need Parent/Subitems manually assigned in Coda

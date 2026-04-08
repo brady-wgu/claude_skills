@@ -1,5 +1,6 @@
 ---
 name: run-pipeline
+model: sonnet
 description: >
   Run Brady's complete daily BLOG and BEAST pipeline with Coda integration. ALWAYS use this
   skill when the user says "run pipeline", "run BLOG and BEAST", "run blog beast", "process
@@ -16,6 +17,12 @@ Unified BLOG + BEAST pipeline. Processes raw daily work notes end-to-end and syn
 
 ---
 
+## Recommended Model
+
+Run this pipeline with **Sonnet** at **normal effort**. The pipeline follows highly structured, rule-based instructions. Sonnet handles this efficiently. Opus is unnecessary and significantly slower.
+
+---
+
 ## MODE: PRODUCTION
 
 CRITICAL EXECUTION RULES:
@@ -24,7 +31,7 @@ CRITICAL EXECUTION RULES:
 - Do NOT pause, ask for confirmation, or wait for input between steps.
 - Process BLOG and BEAST internally. Run all scripts via Bash calls.
 - The user should see ONLY the Final Report as output. Nothing else.
-- If a script fails with a retryable error (e.g., 504 timeout), retry once silently.
+- The scripts handle retryable errors (SSL, connection, timeout, 429/502/503/504) internally with one automatic retry. If a script still fails after its internal retry, do not retry from Claude Code -- report the error in the Final Report.
 
 ---
 
