@@ -61,23 +61,23 @@ Construct a JSON object from the BLOG output with these keys:
 
 NEVER include Section 7 (Sensitive Items) in this JSON.
 
-Write the JSON to a temp file, then run:
+Write the JSON to `temp_blog_entry.json` in the pipeline directory, then run as a separate Bash call:
 ```
-cd C:\Users\brady.redfearn\Projects\GitHub\claude_skills\claude-code-skills\blog-beast-pipeline && python scripts/blog_to_coda.py --input <temp_file_path>
+cd "C:/Users/brady.redfearn/Projects/GitHub/claude_skills/claude-code-skills/blog-beast-pipeline" && python scripts/blog_to_coda.py --input temp_blog_entry.json
 ```
 
 The script strips markdown formatting to plain text for Coda (the API does not render markdown). Headings become UPPERCASE, bold markers are removed, dashes are preserved.
 
 ### Step 3: Extract BEAST Table from Coda
 
-Run:
+Run as a separate Bash call:
 ```
-cd C:\Users\brady.redfearn\Projects\GitHub\claude_skills\claude-code-skills\blog-beast-pipeline && python scripts/beast_from_coda.py
+cd "C:/Users/brady.redfearn/Projects/GitHub/claude_skills/claude-code-skills/blog-beast-pipeline" && python scripts/beast_from_coda.py
 ```
 
 Capture the 12-column CSV output (stdout). This is the full To Do List with all rows including child rows. Due dates are converted from ISO to D Mon YYYY format for BEAST processing.
 
-Steps 2 and 3 can run in parallel.
+Steps 2 and 3 can run in parallel. Run them as **two separate parallel Bash calls**, not combined into a single command with `&`.
 
 ### Step 4: BEAST Processing (internal, no output)
 
@@ -89,9 +89,9 @@ Produce all four sections: Morning Briefing, Flags and Issues, Recommended Task 
 
 Extract the import CSV block from the BEAST output (the block labeled "IMPORT CSV -- CHANGED AND NEW ROWS ONLY"). This is a 10-column CSV with header row.
 
-Write the import CSV to a temp file, then run:
+Write the import CSV to `temp_beast_import.csv` in the pipeline directory, then run:
 ```
-cd C:\Users\brady.redfearn\Projects\GitHub\claude_skills\claude-code-skills\blog-beast-pipeline && python scripts/beast_to_coda.py --input <temp_file_path>
+cd "C:/Users/brady.redfearn/Projects/GitHub/claude_skills/claude-code-skills/blog-beast-pipeline" && python scripts/beast_to_coda.py --input temp_beast_import.csv
 ```
 
 The script validates field values, converts dates to ISO, skips child rows, and upserts using Task ID as the key column.
