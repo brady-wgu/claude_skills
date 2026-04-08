@@ -1,4 +1,4 @@
-# blog-beast-automation
+# blog-beast-pipeline
 
 Automated daily BLOG and BEAST pipeline. Paste raw OneNote notes into Claude Code and everything else happens automatically: BLOG processing, Coda write, BEAST pull, BEAST processing, Coda upsert, final report.
 
@@ -12,7 +12,7 @@ CRITICAL EXECUTION RULES:
 - Do NOT pause, ask for confirmation, or wait for input between steps.
 - Process BLOG and BEAST internally. Run all scripts via Bash calls.
 - The user should see ONLY the Final Report as output. Nothing else.
-- If a script fails with a retryable error (e.g., 504 timeout), retry once silently.
+- The scripts handle retryable errors (SSL, connection, timeout, 429/502/503/504) internally with one automatic retry. If a script still fails after its internal retry, do not retry from Claude Code -- report the error in the Final Report.
 
 Execution flow:
 1. Process BLOG internally (no output)

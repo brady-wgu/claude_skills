@@ -1,7 +1,7 @@
 """
 coda_client.py
 --------------
-Low-level Coda API wrapper for blog-beast-automation.
+Low-level Coda API wrapper for blog-beast-pipeline.
 Handles authentication, doc validation, table/column discovery, row reads, and row writes.
 
 Safety: All operations are scoped to doc ID dHXfr0V468 only.
@@ -14,9 +14,21 @@ Usage:
 import json
 import os
 import sys
+import time
 
 import requests
+from requests.exceptions import ConnectionError, SSLError, Timeout
 from dotenv import load_dotenv
+
+# Inject Windows system certificate store for corporate proxy/VPN environments.
+# truststore makes requests use the OS cert store instead of certifi's bundle,
+# which fixes SSL verification failures behind zScaler or other corporate proxies
+# that intercept TLS with their own root CA.
+try:
+    import truststore
+    truststore.inject_into_ssl()
+except ImportError:
+    pass  # truststore not installed; fall back to default certifi bundle
 
 
 class CodaClient:
@@ -60,25 +72,57 @@ class CodaClient:
             print(f"GET {url}")
             if params:
                 print(f"  params: {params}")
-        resp = requests.get(url, headers=self._headers(), params=params)
-        resp.raise_for_status()
-        data = resp.json()
-        if self.verbose:
-            print(f"  status: {resp.status_code}")
-        return data
+        for attempt in range(2):
+            try:
+                resp = requests.get(
+                    url, headers=self._headers(), params=params, timeout=30
+                )
+                if resp.status_code in (429, 502, 503, 504) and attempt == 0:
+                    if self.verbose:
+                        print(f"  retryable status {resp.status_code}, retrying in 3s...")
+                    time.sleep(3)
+                    continue
+                resp.raise_for_status()
+                data = resp.json()
+                if self.verbose:
+                    print(f"  status: {resp.status_code}")
+                return data
+            except (SSLError, ConnectionError, Timeout) as e:
+                if attempt == 0:
+                    if self.verbose:
+                        print(f"  {type(e).__name__}, retrying in 3s...")
+                    time.sleep(3)
+                    continue
+                raise
 
     def _post(self, path, body):
         url = f"{self.BASE_URL}{path}"
         if self.verbose:
             print(f"POST {url}")
             print(f"  body: {json.dumps(body, indent=2)}")
-        resp = requests.post(url, headers=self._headers(), json=body)
-        resp.raise_for_status()
-        data = resp.json()
-        if self.verbose:
-            print(f"  status: {resp.status_code}")
-            print(f"  response: {json.dumps(data, indent=2)}")
-        return data
+        for attempt in range(2):
+            try:
+                resp = requests.post(
+                    url, headers=self._headers(), json=body, timeout=30
+                )
+                if resp.status_code in (429, 502, 503, 504) and attempt == 0:
+                    if self.verbose:
+                        print(f"  retryable status {resp.status_code}, retrying in 3s...")
+                    time.sleep(3)
+                    continue
+                resp.raise_for_status()
+                data = resp.json()
+                if self.verbose:
+                    print(f"  status: {resp.status_code}")
+                    print(f"  response: {json.dumps(data, indent=2)}")
+                return data
+            except (SSLError, ConnectionError, Timeout) as e:
+                if attempt == 0:
+                    if self.verbose:
+                        print(f"  {type(e).__name__}, retrying in 3s...")
+                    time.sleep(3)
+                    continue
+                raise
 
     def get_doc(self):
         """GET /docs/{docId} -- confirm connectivity and return doc metadata."""
