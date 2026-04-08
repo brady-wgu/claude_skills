@@ -4,7 +4,7 @@ Automated daily BLOG and BEAST pipeline. Paste raw OneNote notes into Claude Cod
 
 ## Recommended Model
 
-Run this pipeline with **Sonnet** at **normal effort**. The pipeline follows highly structured, rule-based instructions. Sonnet handles this efficiently. Opus is unnecessary and significantly slower.
+Run this pipeline with **Sonnet** at **medium effort**. The pipeline follows highly structured, rule-based instructions. Sonnet handles this efficiently. Opus is unnecessary and significantly slower. When triggered via the skill plugin, the `model: sonnet` and `effort: medium` frontmatter fields in SKILL.md enforce this automatically.
 
 ## Trigger Phrases
 

@@ -133,7 +133,7 @@ Should validate the CSV without writing to Coda.
 
 ## Daily Usage
 
-**Recommended model:** Sonnet at normal effort. The pipeline follows highly structured, rule-based instructions. Sonnet handles this efficiently. Opus is unnecessary and significantly slower.
+**Recommended model:** Sonnet at medium effort. The pipeline follows highly structured, rule-based instructions. Sonnet handles this efficiently. Opus is unnecessary and significantly slower. When triggered via the skill plugin, these settings are enforced automatically by the `model: sonnet` and `effort: medium` frontmatter fields in SKILL.md.
 
 **Trigger phrases** -- any of these followed by pasted raw daily work notes:
 

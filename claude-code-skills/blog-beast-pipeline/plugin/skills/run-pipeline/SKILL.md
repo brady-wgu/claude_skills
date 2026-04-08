@@ -1,6 +1,7 @@
 ---
 name: run-pipeline
 model: sonnet
+effort: medium
 description: >
   Run Brady's complete daily BLOG and BEAST pipeline with Coda integration. ALWAYS use this
   skill when the user says "run pipeline", "run BLOG and BEAST", "run blog beast", "process
@@ -19,7 +20,7 @@ Unified BLOG + BEAST pipeline. Processes raw daily work notes end-to-end and syn
 
 ## Recommended Model
 
-Run this pipeline with **Sonnet** at **normal effort**. The pipeline follows highly structured, rule-based instructions. Sonnet handles this efficiently. Opus is unnecessary and significantly slower.
+Run this pipeline with **Sonnet** at **medium effort**. The pipeline follows highly structured, rule-based instructions. Sonnet handles this efficiently. Opus is unnecessary and significantly slower. The `model: sonnet` and `effort: medium` frontmatter fields enforce this automatically when the skill is triggered.
 
 ---
 
