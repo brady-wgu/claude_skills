@@ -1,0 +1,7 @@
+{
+  "name": "activity-hierarchy",
+  "description": "Brady's Activity Hierarchy: automated daily, weekly, monthly, quarterly, and annual work management pipeline via Coda MCP. Five skills that cascade from raw daily notes to annual reviews with integrity checks at every level.",
+  "author": {
+    "name": "Brady Redfearn"
+  }
+}
