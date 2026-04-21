@@ -47,8 +47,9 @@ This repo is organized into two categories based on where the skill runs:
 
 | Skill | Description | Status |
 |-------|-------------|--------|
-| [**beast-morning-briefing**](claude-chat-skills/beast-morning-briefing/) | Standalone BEAST task analysis. Paste a CSV export of your task list and get a structured morning briefing: flags, recommended updates, an import-ready CSV, and a prioritized daily task list. | Stable |
-| [**blog-daily-processor**](claude-chat-skills/blog-daily-processor/) | Standalone BLOG note processor. Paste raw daily work notes and get a 7-section professional journal entry: reviewed notes, polished summary, executive bullets, wins, blockers, category, and a private sensitive items log. | Stable |
+| [**blog-beast-pipeline**](claude-chat-skills/blog-beast-pipeline/) | Daily journal and task reconciliation. Coupled BLOG + BEAST: synthesizes raw OneNote notes into a Daily Log entry, then reconciles the BEAST task table against it. Writes directly to Coda via the Coda MCP (no CSV paste step). | Production |
+| [**blog-beast-weekly-review**](claude-chat-skills/blog-beast-weekly-review/) | Weekly retrospective and integrity audit. Rolls up the prior Mon-Fri Daily Log entries into a Weekly BLOG entry, then runs a seven-check BEAST audit to catch discrepancies that daily cadence misses. | Production |
+| [**blog-beast-monthly-review**](claude-chat-skills/blog-beast-monthly-review/) | Monthly retrospective and integrity audit. Rolls up the prior calendar month's Daily Log entries (cross-referenced against overlapping Weekly BLOGs) into a Monthly BLOG entry, then runs a ten-check BEAST audit. | Production |
 | [**brady-document-style**](claude-chat-skills/brady-document-style/) | WGU document formatting standard. Applies consistent styling, structure, and tone to any document Claude creates or edits -- reports, briefs, market scans, user profiles, and more. | Stable |
 
 ---
@@ -98,10 +99,18 @@ claude_skills/
 │                   └── SKILL.md            Conversational glossary skill (/glossary)
 │
 └── claude-chat-skills/
-    ├── beast-morning-briefing/             Standalone BEAST analysis
-    │   └── beast-morning-briefing.skill
-    ├── blog-daily-processor/               Standalone BLOG processor
-    │   └── blog-daily-processor.skill
+    ├── blog-beast-pipeline/                Daily BLOG + BEAST pipeline (MCP-native)
+    │   ├── SKILL.md                        Skill entry point and operating rules
+    │   └── references/                     BLOG, BEAST, Coda schema, and safety guides
+    ├── blog-beast-pipeline.zip             Packaged bundle for upload
+    ├── blog-beast-weekly-review/           Weekly retrospective + 7-check BEAST audit
+    │   ├── SKILL.md
+    │   └── references/
+    ├── blog-beast-weekly-review.zip
+    ├── blog-beast-monthly-review/          Monthly retrospective + 10-check BEAST audit
+    │   ├── SKILL.md
+    │   └── references/
+    ├── blog-beast-monthly-review.zip
     └── brady-document-style/               Document formatting standard
         └── brady-document-style.skill
 ```
@@ -110,15 +119,16 @@ claude_skills/
 
 ## How to Use a Skill
 
-### Claude Chat Skills (`.skill` files)
+### Claude Chat Skills
 
-1. Download the `.skill` file from the appropriate folder
-2. Open [Claude Chat](https://claude.ai)
-3. Create a new **Project** (or open an existing one)
-4. Upload the `.skill` file to the project's knowledge base
-5. Start a conversation -- Claude will automatically apply the skill when relevant
+Chat skills ship as `.zip` bundles (newer BLOG/BEAST skills) or single `.skill` files (older-format skills like `brady-document-style`). Both are ZIP archives -- the only difference is the `.skill` extension.
 
-> **Tip:** `.skill` files are ZIP archives containing a `SKILL.md` inside a named folder. You can also unzip them and read the markdown directly if you want to review or customize the instructions before uploading.
+1. Download the `.zip` or `.skill` file from the skill's folder
+2. Open [Claude Chat](https://claude.ai) and navigate to **Settings -> Capabilities -> Skills**
+3. Upload the file -- Claude Chat will unpack it and register the skill
+4. Start a conversation; Claude will invoke the skill when the trigger phrases in its description match
+
+> **Tip:** Each skill folder in this repo also contains an unpacked `SKILL.md` (plus a `references/` folder for the BLOG/BEAST skills). Read those directly if you want to review or customize the instructions before zipping and uploading.
 
 ### Claude Code Skills
 
